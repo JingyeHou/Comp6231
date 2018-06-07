@@ -32,7 +32,7 @@ public class ManagerClient extends Thread{
 	String[] args2;
 	static String[] args;
 	String[] requestArgs;
-	HashMap<String, Integer> ManagerServerMap;
+
 
 
 	public ManagerClient(String[] CORBAargs, String[] args2) {
@@ -82,7 +82,7 @@ public class ManagerClient extends Thread{
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		args = args;
+
 		System.out.println("Please enter your managerID. (e.g. MTL1234)");
 		while(true){
 			managerID = scan.nextLine().toUpperCase();
@@ -612,11 +612,6 @@ public class ManagerClient extends Thread{
 	public void run() {
 		// TODO Auto-generated method stub
 
-
-		ManagerServerMap = new HashMap<>();
-		ManagerServerMap.put("MTL", 1050);
-		ManagerServerMap.put("LVL", 1060);
-		ManagerServerMap.put("DDO", 1070);
 		String Location = managerID.substring(0, 3);
 		//--------------------------CORBA part
 		RecordManager remote = null;
@@ -624,7 +619,7 @@ public class ManagerClient extends Thread{
 			ORB orb = ORB.init(args, null);
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-			remote = RecordManagerHelper.narrow(ncRef.resolve_str("SUM-SERVER"));
+			remote = RecordManagerHelper.narrow(ncRef.resolve_str(Location));
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
