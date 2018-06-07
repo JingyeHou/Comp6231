@@ -1,5 +1,5 @@
-2018/06/06 23:23:52  INFO: The HashMap has been initialized on the server.
-2018/06/06 23:23:52  INFO: The records on the server are listed below.
+2018/06/06 23:28:34  INFO: The HashMap has been initialized on the server.
+2018/06/06 23:28:34  INFO: The records on the server are listed below.
 ---------------------------
 Key: H
 StudentRecord [RecordID=SR10002, FirstName=Zhongxu, LastName=Huang, CourseRegistered=maths, Status=active, StatusDate=2017/02/07]
@@ -9,5 +9,5 @@ Key: L
 StudentRecord [RecordID=SR10001, FirstName=Luguang, LastName=Liu, CourseRegistered=maths|french, Status=active, StatusDate=2017/01/07]
 TeacherRecord [RecordID=TR10001, FirstName=Tom, LastName=Laura, Address=Apt9, Phone=911, Specialization=french, Location=MTL]
 ---------------------------
-2018/06/06 23:23:52  INFO: UDP Server has been started, port number: 7777
-2018/06/06 23:23:52  INFO: The CORBA server has already started, port number:1050
+2018/06/06 23:28:34  INFO: UDP Server has been started, port number: 7777
+2018/06/06 23:28:34  INFO: The CORBA server has already started, port number:1050
