@@ -17,64 +17,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ManagerClient.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/client/ManagerClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="180" column="5" lean-forward="false" selection-start-line="180" selection-start-column="5" selection-end-line="180" selection-end-column="5" />
-              <folding>
-                <element signature="method#ManagerClient#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#ManagerClient#1;class#ManagerClient#0" expanded="false" />
-                <element signature="method#printMenu#0;class#ManagerClient#0" expanded="false" />
-                <element signature="docComment;method#isNumeric#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#isNumeric#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#main#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#inputGetCount#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#InputTeacherRecord#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#CheckStudentFieldName#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#CheckTeacherFieldName#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#inputEditRecord#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#InputStudentRecord#0;class#ManagerClient#0" expanded="false" />
-                <element signature="method#run#0;class#ManagerClient#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server/Server.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="79" column="11" lean-forward="false" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ORB.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/org/omg/CORBA/ORB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="418" column="43" lean-forward="false" selection-start-line="418" selection-start-column="36" selection-end-line="418" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MyLogFormatter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/MyLogFormatter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Record.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/Record.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-332">
+            <state relative-caret-position="40">
               <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               <folding />
             </state>
@@ -84,7 +30,7 @@
       <file leaf-file-name="StudentRecord.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/StudentRecord.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1092">
+            <state relative-caret-position="80">
               <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
@@ -94,8 +40,78 @@
       <file leaf-file-name="TeacherRecord.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/TeacherRecord.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
+            <state relative-caret-position="-1312">
               <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_RecordManagerStub.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/_RecordManagerStub.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManagerHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManagerHolder.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerHolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManagerImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManagerPOA.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerPOA.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecordManagerOperations.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerOperations.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -183,6 +199,12 @@
               <item name="comp6231_a2" type="b2602c69:ProjectViewProjectNode" />
               <item name="comp6231_a2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="recordManager" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="comp6231_a2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="comp6231_a2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -210,7 +232,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Server">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -231,7 +253,7 @@
       <module name="comp6231_a2" />
       <envs />
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Server" type="Application" factoryName="Application" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="server.*" />
@@ -328,11 +350,6 @@
       <item index="0" class="java.lang.String" itemvalue="Application.Client" />
       <item index="1" class="java.lang.String" itemvalue="Application.Server" />
     </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.Server" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
     <option name="externalProjectsViewState">
@@ -366,12 +383,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1528318252895</updated>
-      <workItem from="1528318254482" duration="4289000" />
+      <workItem from="1528318254482" duration="5831000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4289000" />
+    <option name="totallyTimeSpent" value="5831000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
@@ -379,14 +396,14 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -419,14 +436,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/model/TeacherRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/src.zip!/org/omg/CORBA/ORB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -435,19 +444,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/StudentRecord.java">
+    <entry file="file://$PROJECT_DIR$/src/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1092">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="10340">
+          <caret line="517" column="76" lean-forward="false" selection-start-line="517" selection-start-column="76" selection-end-line="517" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Record.java">
+    <entry file="file://$PROJECT_DIR$/src/client/ManagerClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-332">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="80">
+          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <element signature="method#run#0;class#ManagerClient#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -459,33 +472,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server/Server.java">
+    <entry file="file://$PROJECT_DIR$/src/model/Record.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="79" column="11" lean-forward="false" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
+        <state relative-caret-position="40">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/ManagerClient.java">
+    <entry file="file://$PROJECT_DIR$/src/model/StudentRecord.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="180" column="5" lean-forward="false" selection-start-line="180" selection-start-column="5" selection-end-line="180" selection-end-column="5" />
-          <folding>
-            <element signature="method#ManagerClient#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#ManagerClient#1;class#ManagerClient#0" expanded="false" />
-            <element signature="method#printMenu#0;class#ManagerClient#0" expanded="false" />
-            <element signature="docComment;method#isNumeric#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#isNumeric#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#main#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#inputGetCount#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#InputTeacherRecord#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#CheckStudentFieldName#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#CheckTeacherFieldName#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#inputEditRecord#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#InputStudentRecord#0;class#ManagerClient#0" expanded="false" />
-            <element signature="method#run#0;class#ManagerClient#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="80">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/TeacherRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1312">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerPOA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerOperations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/_RecordManagerStub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/recordManager/RecordManagerHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>

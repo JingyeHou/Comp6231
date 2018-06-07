@@ -32,7 +32,7 @@ public class ManagerClient extends Thread{
 	String[] args2;
 	static String[] args;
 	String[] requestArgs;
-	HashMap<String, Integer> ManagerServerMap;
+
 
 
 	public ManagerClient(String[] CORBAargs, String[] args2) {
@@ -65,24 +65,24 @@ public class ManagerClient extends Thread{
 
 
 
-	
+
 	/**
 	 * Check if the string is number or not.
 	 * @param str the input string
 	 * @return If the string is made with numbers, then return true, otherwise false.
 	 */
 	public static boolean isNumeric(String str){
-		  for (int i = str.length();--i>=0;){
-		   if (!Character.isDigit(str.charAt(i))){
-		    return false;
-		   }
-		  }
-		  return true;
+		for (int i = str.length();--i>=0;){
+			if (!Character.isDigit(str.charAt(i))){
+				return false;
+			}
 		}
+		return true;
+	}
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		args = args;
+
 		System.out.println("Please enter your managerID. (e.g. MTL1234)");
 		while(true){
 			managerID = scan.nextLine().toUpperCase();
@@ -116,58 +116,58 @@ public class ManagerClient extends Thread{
 			printMenu();
 			String option = scan.nextLine();
 			switch (option) {
-			case "1":
-				String[] request1 = InputStudentRecord(scan);
+				case "1":
+					String[] request1 = InputStudentRecord(scan);
 
-				ManagerClient client1 = new ManagerClient(args, request1);
-				client1.run();
-				break;
+					ManagerClient client1 = new ManagerClient(args, request1);
+					client1.run();
+					break;
 
-			case"2":
-				String[] request2 = InputTeacherRecord(scan);
-				ManagerClient client2 = new ManagerClient(managerID, args, request2);
-				client2.run();
-				break;
+				case"2":
+					String[] request2 = InputTeacherRecord(scan);
+					ManagerClient client2 = new ManagerClient(managerID, args, request2);
+					client2.run();
+					break;
 
-			case"3":
-				String[] request3 = inputEditRecord(scan);
-				ManagerClient client3 = new ManagerClient(managerID, args, request3);
-				client3.run();
-				break;
-			case"4":
-				String[] request4 = inputGetCount(scan);
-				ManagerClient client4 = new ManagerClient(managerID, args, request4);
-				client4.run();
-				break;
-			case"5":
-				System.out.println("Now there will be multiple request sending from " +managerID
-						+ ", including create student record, create teacher record and edit student record.");
-				String[] createStudentRecord = {"Tom","Jerry","maths","active","2020"};
-				String[] createTeacherRecord = {"Anly","Huma","Apt11, Marc street","1829181823","french","MTL"};
-				String[] editRecord = {"SR10003", "FirstName", "Thomas"};
-				new ManagerClient(managerID, args, editRecord).start();
+				case"3":
+					String[] request3 = inputEditRecord(scan);
+					ManagerClient client3 = new ManagerClient(managerID, args, request3);
+					client3.run();
+					break;
+				case"4":
+					String[] request4 = inputGetCount(scan);
+					ManagerClient client4 = new ManagerClient(managerID, args, request4);
+					client4.run();
+					break;
+				case"5":
+					System.out.println("Now there will be multiple request sending from " +managerID
+							+ ", including create student record, create teacher record and edit student record.");
+					String[] createStudentRecord = {"Tom","Jerry","maths","active","2020"};
+					String[] createTeacherRecord = {"Anly","Huma","Apt11, Marc street","1829181823","french","MTL"};
+					String[] editRecord = {"SR10003", "FirstName", "Thomas"};
+					new ManagerClient(managerID, args, editRecord).start();
 
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createTeacherRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, editRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createTeacherRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, createStudentRecord).start();
+					new ManagerClient(managerID, args, editRecord).start();
 //				new ManagerClient(managerID,editRecord).start();
-				break;
-			case"6":
-				System.out.println("GoodBye.");
-				return;
+					break;
+				case"6":
+					System.out.println("GoodBye.");
+					return;
 
 
-			default:
-				System.out.println("Input invalid. Please input a valid number (1~6).");
-				break;
+				default:
+					System.out.println("Input invalid. Please input a valid number (1~6).");
+					break;
 			}
 
 
@@ -179,6 +179,7 @@ public class ManagerClient extends Thread{
 		String[] request = new String[1];
 		return request;
 	}
+
 	private static String[] InputTeacherRecord( Scanner scan) {
 		String[] array = new String[6];
 		System.out.println("Please input a teacher record.");
@@ -286,6 +287,7 @@ public class ManagerClient extends Thread{
 
 		return array;
 	}
+
 	private static boolean CheckStudentFieldName(String input){
 
 		if(input.toLowerCase().equals("firstname")){
@@ -306,6 +308,7 @@ public class ManagerClient extends Thread{
 		return false;
 
 	}
+
 	private static boolean CheckTeacherFieldName(String input){
 
 		if(input.toLowerCase().equals("firstname")){
@@ -330,6 +333,7 @@ public class ManagerClient extends Thread{
 		return false;
 
 	}
+
 	private static String[] inputEditRecord(Scanner scan){
 		String[] array = new String[3];
 		System.out.println("Please input a recordID.");
@@ -377,70 +381,70 @@ public class ManagerClient extends Thread{
 		while(true){
 			String newValue = scan.nextLine();
 			switch(array[1]){
-			case "phone":
-				if(!isNumeric(newValue)){
-					System.out.println("The phone number should only contain numbers.");
-					System.out.println("Please input a valid phone number.");
-					break;
-				}
-				else{
-					try{
-						Long.parseLong(newValue);
-						array[2] = newValue;
-						return array;
-					}
-					catch(NumberFormatException e){
+				case "phone":
+					if(!isNumeric(newValue)){
+						System.out.println("The phone number should only contain numbers.");
 						System.out.println("Please input a valid phone number.");
 						break;
 					}
+					else{
+						try{
+							Long.parseLong(newValue);
+							array[2] = newValue;
+							return array;
+						}
+						catch(NumberFormatException e){
+							System.out.println("Please input a valid phone number.");
+							break;
+						}
 
-				}
-			case "location":
-				if(!newValue.toUpperCase().equals("MTL")
-						&&!newValue.toUpperCase().equals("LVL")
-						&&!newValue.toUpperCase().equals("DDO"))
-				{
-					System.out.println("The locaiton should be one of the range of MTL, LVL, DDO.");
-					System.out.println("Please input a valid location.");
-					break;
+					}
+				case "location":
+					if(!newValue.toUpperCase().equals("MTL")
+							&&!newValue.toUpperCase().equals("LVL")
+							&&!newValue.toUpperCase().equals("DDO"))
+					{
+						System.out.println("The locaiton should be one of the range of MTL, LVL, DDO.");
+						System.out.println("Please input a valid location.");
+						break;
 
-				}
-				else{
-					array[2] = newValue.toUpperCase();
-					return array;
-				}
-			case "courseregistered":
-				if(!newValue.toLowerCase().contains("maths")
-						&&!newValue.toLowerCase().contains("science")
-						&&!newValue.toLowerCase().contains("french")){
-					System.out.println("The registered courses should contains at least one of maths, science and french.");
-					System.out.println("Please input the valid registered courses.");
+					}
+					else{
+						array[2] = newValue.toUpperCase();
+						return array;
+					}
+				case "courseregistered":
+					if(!newValue.toLowerCase().contains("maths")
+							&&!newValue.toLowerCase().contains("science")
+							&&!newValue.toLowerCase().contains("french")){
+						System.out.println("The registered courses should contains at least one of maths, science and french.");
+						System.out.println("Please input the valid registered courses.");
 
-				}
-				else{
-					array[2] = newValue.toLowerCase();
-					return array;
-				}
-			case "status":
-				newValue = newValue.toLowerCase();
-				if(!newValue.equals("active")&&!newValue.equals("inactive")){
-					System.out.println("The status should be one of active or inactive.");
-					System.out.println("Please input a valid status.");
+					}
+					else{
+						array[2] = newValue.toLowerCase();
+						return array;
+					}
+				case "status":
+					newValue = newValue.toLowerCase();
+					if(!newValue.equals("active")&&!newValue.equals("inactive")){
+						System.out.println("The status should be one of active or inactive.");
+						System.out.println("Please input a valid status.");
 
-				}
-				else{
-					array[2] = newValue;
-					return array;
-				}
-			default:
-				if(newValue.isEmpty()){
-					System.out.println("THe new value can not be empty.");
-					System.out.println("Please input a valid new value.");
-				}
-				else{
-					array[2] = newValue;
-					return array;
-				}
+					}
+					else{
+						array[2] = newValue;
+						return array;
+					}
+				default:
+					if(newValue.isEmpty()){
+						System.out.println("THe new value can not be empty.");
+						System.out.println("Please input a valid new value.");
+					}
+					else{
+						array[2] = newValue;
+						return array;
+					}
 
 
 
@@ -496,8 +500,8 @@ public class ManagerClient extends Thread{
 					&&!course.equals("science")
 					&&!course.equals("french")
 					&&!course.contains("/")){
-					System.out.println("Please input the valid registered courses. (e.g. maths/french/science)");
-					System.out.println("If you have multiple courses, please use / to split each course.");
+				System.out.println("Please input the valid registered courses. (e.g. maths/french/science)");
+				System.out.println("If you have multiple courses, please use / to split each course.");
 			}
 			else if(course.equals("maths")
 					||course.equals("science")
@@ -608,11 +612,6 @@ public class ManagerClient extends Thread{
 	public void run() {
 		// TODO Auto-generated method stub
 
-
-		ManagerServerMap = new HashMap<>();
-		ManagerServerMap.put("MTL", 1050);
-		ManagerServerMap.put("LVL", 1060);
-		ManagerServerMap.put("DDO", 1070);
 		String Location = managerID.substring(0, 3);
 		//--------------------------CORBA part
 		RecordManager remote = null;
@@ -620,7 +619,7 @@ public class ManagerClient extends Thread{
 			ORB orb = ORB.init(args, null);
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-			remote = RecordManagerHelper.narrow(ncRef.resolve_str("SUM-SERVER"));
+			remote = RecordManagerHelper.narrow(ncRef.resolve_str(Location));
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
@@ -719,6 +718,6 @@ public class ManagerClient extends Thread{
 
 
 
-		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 
 }
