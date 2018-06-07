@@ -33,6 +33,7 @@ import java.util.logging.Level;
 public class Server {
 	static HashMap<Integer, String> ManagerServerMap;
 	HashMap<Character, List<Record>> RecordMap;
+	private String location;
 	/**
 	 * The TeacherRecord_ID starts with TR10001 
 	 * And the StuentRecord_ID starts with SR10001
@@ -40,9 +41,9 @@ public class Server {
 	String TeacherRecord_ID = "TR10000";
 	String StudentRecord_ID = "SR10000";
 	
-	public Server(){
+	public Server(String location){
 		RecordMap = new HashMap<>();
-
+        this.location = location;
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -168,6 +169,10 @@ public class Server {
 
 
 	}
-	
 
+	private void buildCorba(String [] args, String location) {
+
+	}
 }
+
+

@@ -179,7 +179,6 @@ public class ManagerClient extends Thread{
 		String[] request = new String[1];
 		return request;
 	}
-
 	private static String[] InputTeacherRecord( Scanner scan) {
 		String[] array = new String[6];
 		System.out.println("Please input a teacher record.");
@@ -287,7 +286,6 @@ public class ManagerClient extends Thread{
 
 		return array;
 	}
-
 	private static boolean CheckStudentFieldName(String input){
 
 		if(input.toLowerCase().equals("firstname")){
@@ -308,7 +306,6 @@ public class ManagerClient extends Thread{
 		return false;
 
 	}
-
 	private static boolean CheckTeacherFieldName(String input){
 
 		if(input.toLowerCase().equals("firstname")){
@@ -333,7 +330,6 @@ public class ManagerClient extends Thread{
 		return false;
 
 	}
-
 	private static String[] inputEditRecord(Scanner scan){
 		String[] array = new String[3];
 		System.out.println("Please input a recordID.");
