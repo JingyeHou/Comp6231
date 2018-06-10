@@ -30,6 +30,10 @@ public class Record {
 			this.LastName = newValue;
 		}
 	}
+
+	public String format() {
+		return  "record";
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

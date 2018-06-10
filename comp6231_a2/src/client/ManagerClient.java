@@ -12,6 +12,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ORBPackage.InvalidName;
+import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -56,8 +57,9 @@ public class ManagerClient extends Thread{
 		sb.append("2) Create Teacher Record\n");
 		sb.append("3) Edit Record\n");
 		sb.append("4) Get Count\n");
-		sb.append("5) Test multiple clients request\n");
-		sb.append("6) Exit\n");
+        sb.append("5) TransferRecord\n");
+		sb.append("6) Test multiple clients request\n");
+		sb.append("7) Exit\n");
 		sb.append("Please input a number to continue\n");
 		System.out.println(sb.toString());
 
@@ -139,7 +141,12 @@ public class ManagerClient extends Thread{
 				ManagerClient client4 = new ManagerClient(managerID, args, request4);
 				client4.run();
 				break;
-			case"5":
+				case "5":
+				    String[] request7 = InputTransferRecord(scan);
+                    ManagerClient client7 = new ManagerClient(managerID, args, request7);
+                    client7.run();
+                    break;
+                case"6":
 				System.out.println("Now there will be multiple request sending from " +managerID
 						+ ", including create student record, create teacher record and edit student record.");
 				String[] createStudentRecord = {"Tom","Jerry","maths","active","2020"};
@@ -160,7 +167,7 @@ public class ManagerClient extends Thread{
 				new ManagerClient(managerID, args, editRecord).start();
 //				new ManagerClient(managerID,editRecord).start();
 				break;
-			case"6":
+			case"7":
 				System.out.println("GoodBye.");
 				return;
 
@@ -180,42 +187,18 @@ public class ManagerClient extends Thread{
 		return request;
 	}
 
+	private static String[] InputTransferRecord(Scanner scanner) {
+	    String[] array = new String[2];
+	    array[0] = checkInputRecordID(scanner);
+        array[1] = checkInputLocation(scanner, "remoteServerName");
+        return array;
+    }
+
 	private static String[] InputTeacherRecord( Scanner scan) {
 		String[] array = new String[6];
 		System.out.println("Please input a teacher record.");
-		System.out.println("Please input the firstname.");
-
-		while(true){
-			String firstname = scan.nextLine();
-			if(firstname.isEmpty()){
-				System.out.println("First name can not be empty.");
-				System.out.println("Please input a valid first name.");
-			}
-			else if(firstname.matches(".*\\d+.*")){
-				System.out.println("The firstname should not contain any numbers.");
-				System.out.println("Please input a valid first name.");
-			}
-			else{
-				array[0] = firstname;
-				break;
-			}
-		}
-		System.out.println("Please input the lastname.");
-		while(true){
-			String lastname = scan.nextLine();
-			if(lastname.isEmpty()){
-				System.out.println("Last name can not be empty.");
-				System.out.println("Please input a valid last name.");
-			}
-			else if(lastname.matches(".*\\d+.*")){
-				System.out.println("The lastname should not contain any numbers.");
-				System.out.println("Please input a valid last name.");
-			}
-			else{
-				array[1] = lastname;
-				break;
-			}
-		}
+        array[0] = checkInputName(scan, "first name");
+		array[1] = checkInputName(scan, "last name");
 		System.out.println("Please input the address.");
 		while(true){
 			String address = scan.nextLine();
@@ -234,8 +217,7 @@ public class ManagerClient extends Thread{
 		while(true){
 			String phone = scan.nextLine();
 			if(phone.isEmpty()){
-				System.out.println("Phone can not be empty.");
-				System.out.println("Please input a valid phone number.");
+                checkInputEmpty("phone number");
 			}
 			else if(!isNumeric(phone)){
 				System.out.println("The phone number should only contain numbers.");
@@ -259,8 +241,7 @@ public class ManagerClient extends Thread{
 		while(true){
 			String specialization = scan.nextLine();
 			if(specialization.isEmpty()){
-				System.out.println("Specialization can not be empty.");
-				System.out.println("Please input a valid specialization.");
+				checkInputEmpty("specialization");
 			}
 			else{
 				array[4] = specialization;
@@ -268,27 +249,53 @@ public class ManagerClient extends Thread{
 			}
 
 		}
-		System.out.println("Please input the location. (MTL,LVL,DDO)");
-		while(true){
-			String location = scan.nextLine().toUpperCase();
-			if(!location.equals("MTL")
-					&&!location.equals("LVL")
-					&&!location.equals("DDO"))
-			{
-				System.out.println("The locaiton should be one of the range of MTL, LVL, DDO.");
-				System.out.println("Please input a valid location.");
-
-			}
-			else{
-				array[5] = location;
-				break;
-			}
-		}
+        array[5] = checkInputLocation(scan, "location");
 
 		return array;
 	}
 
-	private static boolean CheckStudentFieldName(String input){
+    private static String checkInputLocation(Scanner scan, String locationStr) {
+        System.out.println("Please input the " + locationStr + ". (MTL,LVL,DDO)");
+        while(true){
+            String location = scan.nextLine().toUpperCase();
+            if(!location.equals("MTL")
+                    &&!location.equals("LVL")
+                    &&!location.equals("DDO"))
+            {
+                System.out.println("The " + locationStr + " should be one of the range of MTL, LVL, DDO.");
+                System.out.println("Please input a valid " + locationStr + ".");
+
+            }
+            else{
+               return location;
+            }
+        }
+    }
+
+    private static void checkInputEmpty(String name) {
+        System.out.println(name + " can not be empty.");
+        System.out.println("Please input a valid "+ name +".");
+    }
+
+    private static String checkInputName(Scanner scan, String firstOrLastName) {
+        System.out.println("Please input the " + firstOrLastName + ".");
+        while(true){
+            String name = scan.nextLine();
+            if(name.isEmpty()){
+                System.out.println(firstOrLastName + " can not be empty.");
+                System.out.println("Please input a valid "+ firstOrLastName + ".");
+            }
+            else if(name.matches(".*\\d+.*")){
+                System.out.println("The " + firstOrLastName +" should not contain any numbers.");
+                System.out.println("Please input a valid " + firstOrLastName +".");
+            }
+            else{
+                return name;
+            }
+        }
+    }
+
+    private static boolean CheckStudentFieldName(String input){
 
 		if(input.toLowerCase().equals("firstname")){
 			return true;
@@ -336,27 +343,7 @@ public class ManagerClient extends Thread{
 
 	private static String[] inputEditRecord(Scanner scan){
 		String[] array = new String[3];
-		System.out.println("Please input a recordID.");
-		while(true){
-			String recordID = scan.nextLine().toUpperCase();
-			if(recordID.length()!=7){
-				System.out.println("RecordID length is incorrect. Please input a valid recordID. "
-						+ "(e.g. SR10001 or TR10001)");
-			}
-			else if(!recordID.startsWith("TR")&&!recordID.startsWith("SR")){
-				System.out.println("RecordID prefix failed. Please input a valid recordID. "
-						+ "(e.g. SR10001 or TR10001)");
-
-			}
-			else if(!isNumeric(recordID.substring(2, recordID.length()))){
-				System.out.println("RecordID invalid. Please input a valid recordID. "
-						+ "(e.g. SR10001 or TR10001)");
-			}
-			else{
-				array[0] = recordID;
-				break;
-			}
-		}
+        array[0] = checkInputRecordID(scan);
 		System.out.println("Please input a fieldname.");
 		System.out.println("(firstname, lastname, address, phone, "
 				+ "specialization, location, courseregistered, status or statusdate");
@@ -452,7 +439,31 @@ public class ManagerClient extends Thread{
 		}
 
 	}
-	private static String[] InputStudentRecord( Scanner scan) {
+
+    private static String checkInputRecordID(Scanner scan) {
+        System.out.println("Please input a recordID.");
+        while(true){
+            String recordID = scan.nextLine().toUpperCase();
+            if(recordID.length()!=7){
+                System.out.println("RecordID length is incorrect. Please input a valid recordID. "
+                        + "(e.g. SR10001 or TR10001)");
+            }
+            else if(!recordID.startsWith("TR")&&!recordID.startsWith("SR")){
+                System.out.println("RecordID prefix failed. Please input a valid recordID. "
+                        + "(e.g. SR10001 or TR10001)");
+
+            }
+            else if(!isNumeric(recordID.substring(2, recordID.length()))){
+                System.out.println("RecordID invalid. Please input a valid recordID. "
+                        + "(e.g. SR10001 or TR10001)");
+            }
+            else{
+                return recordID;
+            }
+        }
+    }
+
+    private static String[] InputStudentRecord( Scanner scan) {
 		String[] array = new String[5];
 		System.out.println("Please input a student record.");
 		System.out.println("Please input the firstname.");
@@ -619,7 +630,11 @@ public class ManagerClient extends Thread{
 			ORB orb = ORB.init(args, null);
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-			remote = RecordManagerHelper.narrow(ncRef.resolve_str(Location));
+			NameComponent nc = new NameComponent(Location, "");
+			NameComponent path[] = {nc};
+			remote = RecordManagerHelper.narrow(ncRef.resolve(path));
+
+//			remote = RecordManagerHelper.narrow(ncRef.resolve_str(Location));
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		}
@@ -634,7 +649,7 @@ public class ManagerClient extends Thread{
 		FileHandler fileHandler = null;
 
 		try {
-			fileHandler = new FileHandler("ClientLogger" + managerID + ".log");
+			fileHandler = new FileHandler("./log/client/ClientLogger" + managerID + ".log");
 			fileHandler.setFormatter(new MyLogFormatter());
 		} catch (SecurityException | IOException e1) {
 			// TODO Auto-generated catch block
@@ -695,7 +710,16 @@ public class ManagerClient extends Thread{
 
 			logger.log(Level.INFO, "Receive a response from server: " + result);
 
-		}
+		} else if (args2.length == 2) {
+		    logger.info("Receive a request to transfer record from user input " + managerID +" .");
+            StringBuilder sb = new StringBuilder();
+            sb.append("The recordID is " + args2[0] + " .");
+            sb.append("The remoteServer is " + args2[1] + " .");
+            sb.append("Sending...");
+
+            result = remote.transferRecord(managerID, args2[0], args2[1]);
+            logger.info("Receive a response from server: " + result);
+        }
 		else if(args2.length == 1){
 			logger.log(Level.INFO,"Receive a request to "
 					+ "get count of records from user input " + managerID +" .");

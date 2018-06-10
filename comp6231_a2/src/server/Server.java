@@ -6,14 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import org.omg.CORBA.ORB;
@@ -33,9 +29,12 @@ import recordManager.RecordManagerImpl;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Server extends recordManager.RecordManagerPOA {
-	static HashMap<Character, List<Record>> RecordMap;
+    HashMap<Character, List<Record>> RecordMap;
 	HashMap<String, Integer> ManagerServerMap;
 	/**
 	 * The TeacherRecord_ID starts with TR10001 
@@ -47,7 +46,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	FileHandler fileHandler;
 	String name;
 
-	int LocalPortNum =7777;
+	int LocalPortNum;
 
 
 	
@@ -56,7 +55,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		this.name = name;
 		RecordMap = new HashMap<>();
 		logger = Logger.getLogger(name+"ServerLogger");
-		fileHandler = new FileHandler(name+ ".log");
+		fileHandler = new FileHandler("./log/server/" + name+ ".log");
 		fileHandler.setFormatter(new model.MyLogFormatter());
 		logger.addHandler(fileHandler);
 		InitHashMap();
@@ -267,7 +266,8 @@ public class Server extends recordManager.RecordManagerPOA {
 		int[] array = {7777,8888,9999};
 		int i = 0;
 		for(int p :array){
-			if(p == LocalPortNum){
+		    logger.info(p + "");
+			if(p == this.LocalPortNum){
 				Iterator iter = RecordMap.entrySet().iterator(); 
 				while (iter.hasNext()) { 
 				    Map.Entry entry = (Map.Entry) iter.next(); 
@@ -278,11 +278,8 @@ public class Server extends recordManager.RecordManagerPOA {
 				}
 				logger.log(Level.INFO,"The count of records on local is " + count[i]);
 				i++;
-
 			}
 			else{
-	
-					
 					CompletableFuture<Integer> getCount = new CompletableFuture<>();
 					new Thread( () -> {
 
@@ -290,7 +287,7 @@ public class Server extends recordManager.RecordManagerPOA {
 						try {
 							address = InetAddress.getByName("localhost");
 						
-						byte data[] = String.valueOf(LocalPortNum).getBytes();
+						byte data[] = String.valueOf(p).getBytes();
 						DatagramPacket packet = new DatagramPacket(data, data.length, address, p);
 						DatagramSocket socket = new DatagramSocket();
 						socket.send(packet);
@@ -342,7 +339,6 @@ public class Server extends recordManager.RecordManagerPOA {
 		    Character key = (Character) entry.getKey(); 
 		    List<Record> val = (List<Record>) entry.getValue(); 
 		    count = count + val.size();
-
 		}
 		
 		return count;
@@ -484,14 +480,92 @@ public class Server extends recordManager.RecordManagerPOA {
 
 	}
 
-	
+	private String getRecordContent(String recordID) {
+        ArrayList<Record> list = new ArrayList<>();
+        for (List<Record> records : RecordMap.values()) {
+            list.addAll(records);
+        }
+        return list.stream()
+                .filter(record -> record.RecordID.equals(recordID))
+                .map(record -> {
+                    if (record.RecordID.substring(0, 2).equals("SR")){
+                        StudentRecord studentRecord = (StudentRecord) record;
+                        return studentRecord.format();
+                    } else {
+                        TeacherRecord teacherRecord = (TeacherRecord) record;
+                        return teacherRecord.format();
+                    }
+                }).findFirst().orElse("content");
+    }
+
 	@Override
 	public String transferRecord(String managerID, String recordID, String remoteServerName) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!checkRecord(recordID)){
+            logger.info(managerID + " can't transfer the record because the server doesn't have the record");
+            return managerID + "can't transfer the record because the server doesn't have the record";
+        }
+
+		logger.info(managerID + "requests to send transferRecord to" + remoteServerName);
+		if (this.name.equals(remoteServerName)){
+            logger.info("you don't have to transfer the record to " + remoteServerName);
+            return "you don't have to transfer the record to " + remoteServerName;
+        }
+        logger.info("Sending transfer record whose recordID is " + recordID + " to " + remoteServerName);
+        DatagramSocket socket = null;
+        try {
+            socket = new DatagramSocket();
+            String sendInfo = managerID + "," + this.getRecordContent(recordID);
+            byte[] recordInfo = sendInfo.getBytes();
+            logger.info(sendInfo);
+            InetAddress aHost = InetAddress.getByName("localhost");
+            int serverPort = ManagerServerMap.get(remoteServerName);
+            DatagramPacket request = new DatagramPacket(recordInfo, sendInfo.length(), aHost, serverPort);
+            socket.send(request);
+
+            byte[] buffer = new byte[1000];
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            socket.receive(reply);
+            String receiveData = new String(buffer, 0, reply.getLength());
+            if (receiveData.equals("success")) {
+                boolean flag = false;
+                for (List<Record> records : RecordMap.values()) {
+                    for (Record record : records) {
+                        if (record.RecordID.equals(recordID)) {
+                            records.remove(record);
+                            flag = true;
+                            break;
+                        }
+                        if (flag) break;
+                    }
+                }
+            }
+            System.out.println("Reply: " + receiveData);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (socket != null) socket.close();
+        }
+
+
+        // TODO Auto-generated method stub
+		return "finish success";
 	}
-	
-//	
+
+	private boolean checkRecord(String recordID) {
+        ArrayList<Record> list = new ArrayList<>();
+        for (List<Record> records : RecordMap.values()) {
+            list.addAll(records);
+		}
+		return  list
+                .stream()
+                .map(record -> record.RecordID)
+                .anyMatch(id -> id.equals(recordID));
+	}
+
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -500,31 +574,29 @@ public class Server extends recordManager.RecordManagerPOA {
 		
 		for(String name : serverName){
 			Server server = new Server(name);
-			server.begin(server);
+			server.begin();
 		}
 
 	}
 
-	private void begin(Server server) {
+	private void begin() {
 		new Thread( () -> {
-			
 			try {
-				
 				int port = 1050;
 				 try {
-				 ORB orb = ORB.init(new String[]{"-ORBInitialHost", "localhost", "-ORBInitialPort", "1050"}, null);
-				 POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
-				 rootpoa.the_POAManager().activate();
-				 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(server);
-				 RecordManager ss = RecordManagerHelper.narrow(ref);
-				 org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-				 NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-				 NameComponent path[] = ncRef.to_name(name);
-				 ncRef.rebind(path, ss);
-				 System.out.println (name+" Server is running . . . ");
-				 logger.log(Level.INFO, "The CORBA server has already started, port number:" + port);
-				 
-				 orb.run();
+                     ORB orb = ORB.init(new String[]{"-ORBInitialHost", "localhost", "-ORBInitialPort", "1050"}, null);
+                     POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+                     rootpoa.the_POAManager().activate();
+                     org.omg.CORBA.Object ref = rootpoa.servant_to_reference(this);
+                     RecordManager ss = RecordManagerHelper.narrow(ref);
+                     org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+                     NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+                     NameComponent nc = new NameComponent(this.name, "");
+                     NameComponent path[] = {nc};
+                     ncRef.rebind(path, ss);
+                     System.out.println(name + " Server is running . . . ");
+                     logger.log(Level.INFO, "The CORBA server has already started, port number:" + port);
+                     orb.run();
 				 } catch (Exception e) {
 				 System.out.println ("Exception: " + e.getMessage());
 				 }
@@ -547,34 +619,57 @@ public class Server extends recordManager.RecordManagerPOA {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			byte data[] = new byte[1024];//create packet data byte[]
+			byte data[] = new byte[2048];//create packet data byte[]
 	        DatagramPacket packet = new DatagramPacket(data, data.length);
 			logger.log(Level.INFO, "UDP Server has been started, port number: " + port);
 
 	        while(true){
 	            try {
-					socket.receive(packet);
+                    socket.receive(packet);
+                    String receiveData = new String(data, 0, packet.getLength());
+                    logger.info("receiveData " + packet.getLength() + receiveData);
+                    InetAddress address = packet.getAddress();
+                    int source_port = packet.getPort();
+                    if (isPort(receiveData)) {
+                        byte res[] = String.valueOf(this.serverGetCount()).getBytes();
+                        DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
+                        logger.log(Level.INFO, "Receive a request for GetCount." + this.serverGetCount());
+                        socket.send(packet2);
+                    } else if (isRecordID(receiveData)) {
+                        String[] strings = receiveData.split(",");
+                        if (strings[1].equals("StudentRecord"))
+                            createSRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7]);
+                        if (strings[1].equals("TeacherRecord"))
+                            createTRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8]);
+                        byte res[] = "success".getBytes();
+                        DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
+                        logger.log(Level.INFO, "Receive a request for transferRecord.");
+                        socket.send(packet2);
+                    }
+
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}//listening 
-	            InetAddress address = packet.getAddress(); 
-	            int source_port = packet.getPort();
-	            byte res[] = String.valueOf(server.serverGetCount()).getBytes();
-	            DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
-	            logger.log(Level.INFO, "Receive a reuest for GetCount.");
+
 	            //
-	            try {
-					socket.send(packet2);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 	    		logger.log(Level.INFO, "The count has already sent.");
 	        }
 		}).start();
 		
 	}
-	
+
+    private boolean isPort(String source) {
+	    String regExp = "\\d{4}";
+	    return source.matches(regExp);
+    }
+
+    private boolean isRecordID(String source) {
+        String regExp = "[A-Z]{2}\\d\\d\\d\\d";
+        Pattern pattern = Pattern.compile(regExp);
+        Matcher matcher = pattern.matcher(source);
+	    return matcher.find();
+    }
 
 }

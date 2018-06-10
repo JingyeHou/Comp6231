@@ -76,6 +76,10 @@ public class StudentRecord extends Record{
 				+ "]";
 	}
 
+	public String format() {
+		return "StudentRecord" + "," + RecordID + "," + LastName + "," + FirstName + "," + CourseRegesitered + "," + Status +  "," + StatusDate;
+	}
+
 	
 	
 	
