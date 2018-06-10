@@ -83,7 +83,7 @@ public class TeacherRecord extends Record{
 	}
 
 	public String format() {
-		return "TeacherRecord" + "," + RecordID + "," + LastName + "," + FirstName + "," + Address + "," + Phone +  "," + Specialization + "," + Location;
+		return "TeacherRecord" + "," + RecordID + "," + FirstName + "," + LastName + "," + Address + "," + Phone +  "," + Specialization + "," + Location;
 	}
 
 
