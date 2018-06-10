@@ -500,6 +500,7 @@ public class Server extends recordManager.RecordManagerPOA {
 
 	@Override
 	public String transferRecord(String managerID, String recordID, String remoteServerName) {
+	    String receiveData = "";
 		if (!checkRecord(recordID)){
             logger.info(managerID + " can't transfer the record because the server doesn't have the record");
             return managerID + "can't transfer the record because the server doesn't have the record";
@@ -525,8 +526,8 @@ public class Server extends recordManager.RecordManagerPOA {
             byte[] buffer = new byte[1000];
             DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
             socket.receive(reply);
-            String receiveData = new String(buffer, 0, reply.getLength());
-            if (receiveData.equals("success")) {
+            receiveData = new String(buffer, 0, reply.getLength());
+            if (checkIsTransferSuccess(receiveData)) {
                 boolean flag = false;
                 for (List<Record> records : RecordMap.values()) {
                     for (Record record : records) {
@@ -539,7 +540,7 @@ public class Server extends recordManager.RecordManagerPOA {
                     }
                 }
             }
-            System.out.println("Reply: " + receiveData);
+            logger.info(receiveData);
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {
@@ -552,8 +553,15 @@ public class Server extends recordManager.RecordManagerPOA {
 
 
         // TODO Auto-generated method stub
-		return "finish success";
+		return receiveData;
 	}
+
+	private boolean checkIsTransferSuccess(String source) {
+        String regExp = "created";
+        Pattern pattern = Pattern.compile(regExp);
+        Matcher matcher = pattern.matcher(source);
+        return matcher.find();
+    }
 
 	private boolean checkRecord(String recordID) {
         ArrayList<Record> list = new ArrayList<>();
@@ -635,16 +643,20 @@ public class Server extends recordManager.RecordManagerPOA {
                         DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
                         logger.log(Level.INFO, "Receive a request for GetCount." + this.serverGetCount());
                         socket.send(packet2);
+                        logger.log(Level.INFO, "The count has already sent.");
                     } else if (isRecordID(receiveData)) {
-                        String[] strings = receiveData.split(",");
-                        if (strings[1].equals("StudentRecord"))
-                            createSRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7]);
-                        if (strings[1].equals("TeacherRecord"))
-                            createTRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8]);
-                        byte res[] = "success".getBytes();
-                        DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
                         logger.log(Level.INFO, "Receive a request for transferRecord.");
+                        String result = "";
+                        String[] strings = receiveData.split(",");
+                        if (strings[1].equals("StudentRecord")) {
+                            result = createSRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7]);
+                        }
+                        if (strings[1].equals("TeacherRecord"))
+                            result = createTRecord(strings[0], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8]);
+                        byte res[] = result.getBytes();
+                        DatagramPacket packet2 = new DatagramPacket(res, res.length, address, source_port);
                         socket.send(packet2);
+                        logger.info("transferRecord result has been sent");
                     }
 
 				} catch (IOException e) {
@@ -654,7 +666,6 @@ public class Server extends recordManager.RecordManagerPOA {
 
 	            //
 
-	    		logger.log(Level.INFO, "The count has already sent.");
 	        }
 		}).start();
 		
