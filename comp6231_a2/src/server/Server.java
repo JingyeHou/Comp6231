@@ -55,7 +55,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		this.name = name;
 		RecordMap = new HashMap<>();
 		logger = Logger.getLogger(name+"ServerLogger");
-		fileHandler = new FileHandler("./log/server/" + name+ ".log");
+		fileHandler = new FileHandler(name+ ".log");
 		fileHandler.setFormatter(new model.MyLogFormatter());
 		logger.addHandler(fileHandler);
 		InitHashMap();
@@ -501,6 +501,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	@Override
 	public String transferRecord(String managerID, String recordID, String remoteServerName) {
 	    String receiveData = "";
+	    synchronized (RecordMap) {
 		if (!checkRecord(recordID)){
             logger.info(managerID + " can't transfer the record because the server doesn't have the record");
             return managerID + "can't transfer the record because the server doesn't have the record";
@@ -532,7 +533,10 @@ public class Server extends recordManager.RecordManagerPOA {
                 for (List<Record> records : RecordMap.values()) {
                     for (Record record : records) {
                         if (record.RecordID.equals(recordID)) {
-                            records.remove(record);
+                        	
+                        		records.remove(record);
+                        	
+                            
                             flag = true;
                             break;
                         }
@@ -553,6 +557,7 @@ public class Server extends recordManager.RecordManagerPOA {
 
 
         // TODO Auto-generated method stub
+	    }
 		return receiveData;
 	}
 

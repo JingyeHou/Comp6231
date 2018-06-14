@@ -21,6 +21,8 @@ public class StudentRecord extends Record{
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
+		if(obj instanceof TeacherRecord)
+			return false;
 		StudentRecord record = (StudentRecord)obj;
 
 		if(record.LastName.equals(this.LastName)&&record.FirstName.equals(this.FirstName)

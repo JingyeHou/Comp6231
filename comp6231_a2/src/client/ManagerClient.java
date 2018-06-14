@@ -152,24 +152,34 @@ public class ManagerClient extends Thread{
 				String[] createStudentRecord = {"Tom","Jerry","maths","active","2020"};
 				String[] createTeacherRecord = {"Anly","Huma","Apt11, Marc street","1829181823","french","MTL"};
 				String[] editRecord = {"SR10003", "FirstName", "Thomas"};
-				new ManagerClient(managerID, args, editRecord).start();
-
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createTeacherRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, editRecord).start();
-//				new ManagerClient(managerID,editRecord).start();
+				
+				
+				 String[] trans = {"SR10003","DDO"};
+				 new ManagerClient(managerID, args, createStudentRecord).run();
+				 new ManagerClient(managerID, args, editRecord).start();
+				 new ManagerClient(managerID, args, trans).start();
+				 
+				 
+//				 
+//				new ManagerClient(managerID, args, editRecord).start();
+//
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createTeacherRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, createStudentRecord).start();
+//				new ManagerClient(managerID, args, editRecord).start();
+////				new ManagerClient(managerID,editRecord).start();
 				break;
 			case"7":
 				System.out.println("GoodBye.");
 				return;
+			
 
 
 			default:
@@ -191,6 +201,7 @@ public class ManagerClient extends Thread{
 	    String[] array = new String[2];
 	    array[0] = checkInputRecordID(scanner);
         array[1] = checkInputLocation(scanner, "remoteServerName");
+       
         return array;
     }
 
@@ -649,7 +660,7 @@ public class ManagerClient extends Thread{
 		FileHandler fileHandler = null;
 
 		try {
-			fileHandler = new FileHandler("./log/client/ClientLogger" + managerID + ".log");
+			fileHandler = new FileHandler("ClientLogger" + managerID + ".log");
 			fileHandler.setFormatter(new MyLogFormatter());
 		} catch (SecurityException | IOException e1) {
 			// TODO Auto-generated catch block
