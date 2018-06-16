@@ -461,24 +461,6 @@ public class Server extends recordManager.RecordManagerPOA {
 		return true;
 
 	}
-	
-	public boolean DeleteRecord(String recordID){
-		Iterator iter = RecordMap.entrySet().iterator(); 
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Character key = (Character) entry.getKey(); 
-		    List<Record> val = (List<Record>) entry.getValue(); 
-		    
-		    for(Record record : val){
-		    	if(record.RecordID.equals(recordID)){
-		    		val.remove(record);
-		    		return true;
-		    	}
-		    }
-		}
-		return false;
-
-	}
 
 	private String getRecordContent(String recordID) {
         ArrayList<Record> list = new ArrayList<>();
@@ -503,10 +485,10 @@ public class Server extends recordManager.RecordManagerPOA {
 	    String receiveData = "";
 		if (!checkRecord(recordID)){
             logger.info(managerID + " can't transfer the record because the server doesn't have the record");
-            return managerID + "can't transfer the record because the server doesn't have the record";
+            return managerID + " can't transfer the record because the server doesn't have the record";
         }
 
-		logger.info(managerID + "requests to send transferRecord to" + remoteServerName);
+		logger.info(managerID + " requests to send transferRecord to " + remoteServerName);
 		if (this.name.equals(remoteServerName)){
             logger.info("you don't have to transfer the record to " + remoteServerName);
             return "you don't have to transfer the record to " + remoteServerName;
@@ -528,17 +510,7 @@ public class Server extends recordManager.RecordManagerPOA {
             socket.receive(reply);
             receiveData = new String(buffer, 0, reply.getLength());
             if (checkIsTransferSuccess(receiveData)) {
-                boolean flag = false;
-                for (List<Record> records : RecordMap.values()) {
-                    for (Record record : records) {
-                        if (record.RecordID.equals(recordID)) {
-                            records.remove(record);
-                            flag = true;
-                            break;
-                        }
-                        if (flag) break;
-                    }
-                }
+                deleteRecord(recordID);
             }
             logger.info(receiveData);
         } catch (SocketException e) {
@@ -556,7 +528,23 @@ public class Server extends recordManager.RecordManagerPOA {
 		return receiveData;
 	}
 
-	private boolean checkIsTransferSuccess(String source) {
+    private void deleteRecord(String recordID) {
+	    synchronized (RecordMap){
+            boolean flag = false;
+            for (List<Record> records : RecordMap.values()) {
+                for (Record record : records) {
+                    if (record.RecordID.equals(recordID)) {
+                        records.remove(record);
+                        flag = true;
+                        break;
+                    }
+                    if (flag) break;
+                }
+            }
+        }
+    }
+
+    private boolean checkIsTransferSuccess(String source) {
         String regExp = "created";
         Pattern pattern = Pattern.compile(regExp);
         Matcher matcher = pattern.matcher(source);
@@ -564,14 +552,16 @@ public class Server extends recordManager.RecordManagerPOA {
     }
 
 	private boolean checkRecord(String recordID) {
-        ArrayList<Record> list = new ArrayList<>();
-        for (List<Record> records : RecordMap.values()) {
-            list.addAll(records);
-		}
-		return  list
-                .stream()
-                .map(record -> record.RecordID)
-                .anyMatch(id -> id.equals(recordID));
+	    synchronized (RecordMap) {
+            ArrayList<Record> list = new ArrayList<>();
+            for (List<Record> records : RecordMap.values()) {
+                list.addAll(records);
+            }
+            return  list
+                    .stream()
+                    .map(record -> record.RecordID)
+                    .anyMatch(id -> id.equals(recordID));
+        }
 	}
 
 	
@@ -635,7 +625,6 @@ public class Server extends recordManager.RecordManagerPOA {
 	            try {
                     socket.receive(packet);
                     String receiveData = new String(data, 0, packet.getLength());
-                    logger.info("receiveData " + packet.getLength() + receiveData);
                     InetAddress address = packet.getAddress();
                     int source_port = packet.getPort();
                     if (isPort(receiveData)) {
