@@ -67,7 +67,7 @@ public class ManagerClient extends Thread{
 
 
 
-	
+
 	/**
 	 * Check if the string is number or not.
 	 * @param str the input string
@@ -149,37 +149,19 @@ public class ManagerClient extends Thread{
                 case"6":
 				System.out.println("Now there will be multiple request sending from " +managerID
 						+ ", including create student record, create teacher record and edit student record.");
-				String[] createStudentRecord = {"Tom","Jerry","maths","active","2020"};
-				String[] createTeacherRecord = {"Anly","Huma","Apt11, Marc street","1829181823","french","MTL"};
+				String[] transferRecord = {"SR10003","LVL"};
+				String[] createStudentRecord = {"Jingye","Hou","maths","active","123"};
 				String[] editRecord = {"SR10003", "FirstName", "Thomas"};
-				
-				
-				 String[] trans = {"SR10003","DDO"};
-				 new ManagerClient(managerID, args, createStudentRecord).run();
-				 new ManagerClient(managerID, args, editRecord).start();
-				 new ManagerClient(managerID, args, trans).start();
-				 
-				 
-//				 
-//				new ManagerClient(managerID, args, editRecord).start();
-//
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createTeacherRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, createStudentRecord).start();
-//				new ManagerClient(managerID, args, editRecord).start();
-////				new ManagerClient(managerID,editRecord).start();
+				new ManagerClient(managerID, args, transferRecord).start();
+				new ManagerClient(managerID, args, createStudentRecord).start();
+				new ManagerClient(managerID, args, editRecord).start();
+
+
 				break;
 			case"7":
 				System.out.println("GoodBye.");
 				return;
-			
+
 
 
 			default:
@@ -201,7 +183,7 @@ public class ManagerClient extends Thread{
 	    String[] array = new String[2];
 	    array[0] = checkInputRecordID(scanner);
         array[1] = checkInputLocation(scanner, "remoteServerName");
-       
+
         return array;
     }
 
