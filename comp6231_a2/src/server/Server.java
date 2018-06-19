@@ -37,7 +37,7 @@ public class Server extends recordManager.RecordManagerPOA {
     HashMap<Character, List<Record>> RecordMap;
 	HashMap<String, Integer> ManagerServerMap;
 	/**
-	 * The TeacherRecord_ID starts with TR10001 
+	 * The TeacherRecord_ID starts with TR10001
 	 * And the StuentRecord_ID starts with SR10001
 	 */
 	String TeacherRecord_ID = "TR10000";
@@ -49,7 +49,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	int LocalPortNum;
 
 
-	
+
 	public Server(String name) throws SecurityException, IOException{
 		super();
 		this.name = name;
@@ -64,16 +64,16 @@ public class Server extends recordManager.RecordManagerPOA {
 		ManagerServerMap.put("LVL", 8888);
 		ManagerServerMap.put("DDO", 9999);
 		LocalPortNum = ManagerServerMap.get(name);
-	
+
 	}
-	
+
 	/**
 	 * Insert the record to the HashMap
 	 * If there is a related key in the HashMap, then update the value.
 	 * Otherwise create the list and put the list to the HashMap.
 	 * @param record The record need to be inserted.
 	 */
-	
+
 	public void InsertHashMap(Record record){
 		// TODO Auto-generated method stub
 		synchronized (RecordMap) {
@@ -90,11 +90,11 @@ public class Server extends recordManager.RecordManagerPOA {
 			newList.add(record);
 			RecordMap.put(key, newList);
 			//logger.log(Level.INFO, "The record:" + record.RecordID + " has been updated to the server.");
-			
+
 		}
 		}
 	}
-	
+
 	/**
 	 * Allocate a new StudentRecord_ID.
 	 * Based on the StuentRecord_ID and +1.
@@ -134,7 +134,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		recordList.add(teacherRecord2);
 		for(Record record : recordList){
 			InsertHashMap(record);
-		}		
+		}
 		logger.log(Level.INFO,"The HashMap has been initialized on the server.");
 		logger.log(Level.INFO, IterateHashMap());
 	}
@@ -145,13 +145,13 @@ public class Server extends recordManager.RecordManagerPOA {
 		StringBuilder sb = new StringBuilder();
 		sb.append("The records on the server are listed below.\n");
 		// TODO Auto-generated method stub
-		Iterator iter = RecordMap.entrySet().iterator(); 
+		Iterator iter = RecordMap.entrySet().iterator();
 		sb.append("---------------------------\n");
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Character key = (Character) entry.getKey(); 
-		    List<Record> val = (List<Record>) entry.getValue(); 
-		    sb.append("Key: " + key +"\n");   
+		while (iter.hasNext()) {
+		    Map.Entry entry = (Map.Entry) iter.next();
+		    Character key = (Character) entry.getKey();
+		    List<Record> val = (List<Record>) entry.getValue();
+		    sb.append("Key: " + key +"\n");
 		    for(Record record : val){
 		    	sb.append(record.toString()+"\n");
 		    }
@@ -160,20 +160,20 @@ public class Server extends recordManager.RecordManagerPOA {
 		return sb.toString();
 	}
 	/**
-	 * 
+	 *
 	 * @param record1
 	 * @return If exist, return false
 
 	 */
 	public boolean CheckRecordIfExist2(Record record1){
 		// TODO Auto-generated method stub
-		Iterator iter = RecordMap.entrySet().iterator(); 
+		Iterator iter = RecordMap.entrySet().iterator();
 		if(record1 instanceof StudentRecord){
 			StudentRecord temp = (StudentRecord) record1;
-			while (iter.hasNext()) { 
-			    Map.Entry entry = (Map.Entry) iter.next(); 
-			    Character key = (Character) entry.getKey(); 
-			    List<Record> val = (List<Record>) entry.getValue(); 
+			while (iter.hasNext()) {
+			    Map.Entry entry = (Map.Entry) iter.next();
+			    Character key = (Character) entry.getKey();
+			    List<Record> val = (List<Record>) entry.getValue();
 			    for(Record record : val){
 			    	if(record instanceof StudentRecord){
 			    		record = (StudentRecord)record;
@@ -186,12 +186,12 @@ public class Server extends recordManager.RecordManagerPOA {
 		}
 		else if(record1 instanceof TeacherRecord){
 			TeacherRecord temp = (TeacherRecord) record1;
-			while (iter.hasNext()) { 
-			    Map.Entry entry = (Map.Entry) iter.next(); 
-			    Character key = (Character) entry.getKey(); 
-			    List<Record> val = (List<Record>) entry.getValue(); 
+			while (iter.hasNext()) {
+			    Map.Entry entry = (Map.Entry) iter.next();
+			    Character key = (Character) entry.getKey();
+			    List<Record> val = (List<Record>) entry.getValue();
 			    for(Record record : val){
-			    	
+
 			    	if(record instanceof TeacherRecord){
 			    		record = (TeacherRecord)record;
 				    	if(record.equals(temp)){
@@ -210,7 +210,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		synchronized (RecordMap) {
 			logger.log(Level.INFO,"Receive a request for creating teacher record from: " + managerID);
 			//-------------
-			TeacherRecord temp = new TeacherRecord("TR00000", 
+			TeacherRecord temp = new TeacherRecord("TR00000",
 					firstName, lastName, address, Long.parseLong(phone), specialization, Location);
 			//-------------
 			if(!CheckRecordIfExist2(temp)){
@@ -219,7 +219,7 @@ public class Server extends recordManager.RecordManagerPOA {
 				return "There is already a record for " + lastName +", " + firstName;
 			}
 			//-------------
-			TeacherRecord teacherRecord = new TeacherRecord(GetCurrentTeacherRecordID(), 
+			TeacherRecord teacherRecord = new TeacherRecord(GetCurrentTeacherRecordID(),
 					firstName, lastName, address, Long.parseLong(phone), specialization, Location);
 			InsertHashMap(teacherRecord);
 			logger.log(Level.INFO,"The request for creating teacher record from "+ managerID+" has already handled.");
@@ -227,7 +227,7 @@ public class Server extends recordManager.RecordManagerPOA {
 			IterateHashMap();
 
 			return "The record has already created." +"The recordID is " +teacherRecord.RecordID +"\n";
-		
+
 		}
 	}
 
@@ -238,7 +238,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		synchronized (RecordMap) {
 		logger.log(Level.INFO,"Receive a request for creating student record from: " + managerID);
 		//-------------
-		StudentRecord temp = new StudentRecord("SR00000", 
+		StudentRecord temp = new StudentRecord("SR00000",
 				firstName, lastName, courseRegesitered, status, statusDate);
 		//-------------
 		if(!CheckRecordIfExist2(temp)){
@@ -247,14 +247,14 @@ public class Server extends recordManager.RecordManagerPOA {
 			return "There is already a record for " + lastName +", " + firstName;
 		}
 		//-------------
-		StudentRecord studentRecord = new StudentRecord(GetCurrentStudentRecordID(), 
+		StudentRecord studentRecord = new StudentRecord(GetCurrentStudentRecordID(),
 				firstName, lastName, courseRegesitered, status, statusDate);
-		
+
 		InsertHashMap(studentRecord);
 		logger.log(Level.INFO,"The request for creating student record from "+ managerID+" has already handled.");
 		IterateHashMap();
 		logger.log(Level.INFO, IterateHashMap());
-		
+
 		return "The record has already created." +"The recordID is " +studentRecord.RecordID +"\n";
 		}
 	}
@@ -268,11 +268,11 @@ public class Server extends recordManager.RecordManagerPOA {
 		for(int p :array){
 		    logger.info(p + "");
 			if(p == this.LocalPortNum){
-				Iterator iter = RecordMap.entrySet().iterator(); 
-				while (iter.hasNext()) { 
-				    Map.Entry entry = (Map.Entry) iter.next(); 
-				    Character key = (Character) entry.getKey(); 
-				    List<Record> val = (List<Record>) entry.getValue(); 
+				Iterator iter = RecordMap.entrySet().iterator();
+				while (iter.hasNext()) {
+				    Map.Entry entry = (Map.Entry) iter.next();
+				    Character key = (Character) entry.getKey();
+				    List<Record> val = (List<Record>) entry.getValue();
 				    count[i] = count[i] + val.size();
 
 				}
@@ -286,17 +286,17 @@ public class Server extends recordManager.RecordManagerPOA {
 						InetAddress address;
 						try {
 							address = InetAddress.getByName("localhost");
-						
+
 						byte data[] = String.valueOf(p).getBytes();
 						DatagramPacket packet = new DatagramPacket(data, data.length, address, p);
 						DatagramSocket socket = new DatagramSocket();
 						socket.send(packet);
 						logger.log(Level.INFO,"Sending a request for count of records on remote server " + address +"/" + p);
-						
+
 				        byte data2[] = new byte[1024];
 				        DatagramPacket packet2 = new DatagramPacket(data2, data2.length);
 				        socket.receive(packet2);
-				        String reply = new String(data2, 0, packet2.getLength()); 
+				        String reply = new String(data2, 0, packet2.getLength());
 				        getCount.complete(Integer.parseInt(reply));
 				        socket.close();
 						}catch (UnknownHostException e) {
@@ -309,11 +309,11 @@ public class Server extends recordManager.RecordManagerPOA {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
-						
+
+
 					}).start();
 					try {
-						
+
 						count[i] = getCount.get().intValue();
 						logger.log(Level.INFO,"Receive a request for count of records on remote server "+ p+" : " + count[i]);
 						i++;
@@ -321,11 +321,11 @@ public class Server extends recordManager.RecordManagerPOA {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					
+
+
 			}
 		}
-		
+
 		return count[0] +","+count[1] +"," +count[2];
 	}
 
@@ -333,24 +333,24 @@ public class Server extends recordManager.RecordManagerPOA {
 	public int serverGetCount() {
 		// TODO Auto-generated method stub
 		int count = 0;
-		Iterator iter = RecordMap.entrySet().iterator(); 
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Character key = (Character) entry.getKey(); 
-		    List<Record> val = (List<Record>) entry.getValue(); 
+		Iterator iter = RecordMap.entrySet().iterator();
+		while (iter.hasNext()) {
+		    Map.Entry entry = (Map.Entry) iter.next();
+		    Character key = (Character) entry.getKey();
+		    List<Record> val = (List<Record>) entry.getValue();
 		    count = count + val.size();
 		}
-		
+
 		return count;
 	}
 	public List<Record> GetRecordList(){
 		// TODO Auto-generated method stub
 		List<Record> list = new ArrayList<>();
-		Iterator iter = RecordMap.entrySet().iterator(); 
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Character key = (Character) entry.getKey(); 
-		    List<Record> val = (List<Record>) entry.getValue(); 
+		Iterator iter = RecordMap.entrySet().iterator();
+		while (iter.hasNext()) {
+		    Map.Entry entry = (Map.Entry) iter.next();
+		    Character key = (Character) entry.getKey();
+		    List<Record> val = (List<Record>) entry.getValue();
 //		    System.out.println("There are the record(s) in a same list. (Last name begin with " +key +")" );
 		    for(Record record : val){
 		    	list.add(record);
@@ -368,7 +368,7 @@ public class Server extends recordManager.RecordManagerPOA {
 				logger.log(Level.INFO,"The request record is not exist on the server, the request from "+ managerID+" has been rejected.");
 				logger.log(Level.INFO, IterateHashMap());
 				return "The record is not in this server.";
-			
+
 			}
 			else{
 
@@ -379,13 +379,13 @@ public class Server extends recordManager.RecordManagerPOA {
 							+ "The edit request has been rejected.";
 				}
 				record.editField(fieldName, newValue);
-		
+
 				IterateHashMap();
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("The request for modifying record from "+ managerID+" has already handled.");
 				String temp = "The recordID is "+recordID+". The field name is " +fieldName +" , the new value is " +newValue +"\n";
-			
+
 				sb.append("The recordID is "+recordID+". The field name is " +fieldName +" , the new value is " +newValue +".");
 				logger.log(Level.INFO,sb.toString());
 				logger.log(Level.INFO, IterateHashMap());
@@ -395,12 +395,12 @@ public class Server extends recordManager.RecordManagerPOA {
 			}
 	}
 	public Record FindRecord(String recordID){
-		Iterator iter = RecordMap.entrySet().iterator(); 
-		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
-		    Character key = (Character) entry.getKey(); 
-		    List<Record> val = (List<Record>) entry.getValue(); 
-		    
+		Iterator iter = RecordMap.entrySet().iterator();
+		while (iter.hasNext()) {
+		    Map.Entry entry = (Map.Entry) iter.next();
+		    Character key = (Character) entry.getKey();
+		    List<Record> val = (List<Record>) entry.getValue();
+
 		    for(Record record : val){
 		    	if(record.RecordID.equals(recordID)){
 		    		return record;
@@ -410,13 +410,13 @@ public class Server extends recordManager.RecordManagerPOA {
 		return null;
 
 	}
-	
+
 	public boolean FindRecordWithNewValue(Record record, String fieldName, String newValue){
 		if(record.RecordID.startsWith("SR")){
-			StudentRecord temp = new StudentRecord(record.RecordID, record.getFirstName(), record.getLastName(), 
+			StudentRecord temp = new StudentRecord(record.RecordID, record.getFirstName(), record.getLastName(),
 					((StudentRecord) record).getCourseRegesitered(), ((StudentRecord) record).getStatus(), ((StudentRecord) record).StatusDate);
 			if(fieldName.toLowerCase().equals("coursesregistered")){
-				
+
 				temp.CourseRegesitered = newValue;
 			}
 			else if(fieldName.toLowerCase().equals("status")){
@@ -435,7 +435,7 @@ public class Server extends recordManager.RecordManagerPOA {
 
 		}
 		if(record.RecordID.startsWith("TR")){
-			TeacherRecord temp = new TeacherRecord(record.RecordID, record.FirstName, record.LastName, 
+			TeacherRecord temp = new TeacherRecord(record.RecordID, record.FirstName, record.LastName,
 					((TeacherRecord) record).Address, ((TeacherRecord) record).Phone,((TeacherRecord) record).Specialization,
 					((TeacherRecord) record).Location);
 			if(fieldName.toLowerCase().equals("address")){
@@ -564,12 +564,12 @@ public class Server extends recordManager.RecordManagerPOA {
         }
 	}
 
-	
+
 	public static void main(String[] args) throws IOException {
-		
-	
+
+
 		String[] serverName ={"MTL","LVL","DDO"};
-		
+
 		for(String name : serverName){
 			Server server = new Server(name);
 			server.begin();
@@ -603,10 +603,10 @@ public class Server extends recordManager.RecordManagerPOA {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}).start();
-		
-		 
+
+
 		new Thread( () -> {
 			int port = ManagerServerMap.get(name);
 
@@ -651,13 +651,13 @@ public class Server extends recordManager.RecordManagerPOA {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}//listening 
+				}//listening
 
 	            //
 
 	        }
 		}).start();
-		
+
 	}
 
     private boolean isPort(String source) {
