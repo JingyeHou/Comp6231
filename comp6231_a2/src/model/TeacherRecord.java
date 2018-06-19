@@ -18,6 +18,8 @@ public class TeacherRecord extends Record{
 
 	@Override
 	public boolean equals(Object obj) {
+		if(obj instanceof StudentRecord)
+			return false;
 		TeacherRecord record = (TeacherRecord)obj;
 		if(record.LastName.equals(this.LastName)&&record.FirstName.equals(this.FirstName)
 				&&record.Address.equals(this.Address)&&record.Phone.equals(this.Phone)

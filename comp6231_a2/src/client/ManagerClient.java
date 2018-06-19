@@ -68,7 +68,7 @@ public class ManagerClient extends Thread{
 
 
 
-	
+
 	/**
 	 * Check if the string is number or not.
 	 * @param str the input string
@@ -149,7 +149,7 @@ public class ManagerClient extends Thread{
                     break;
                 case"6":
 				System.out.println("Now there will be multiple request sending from " +managerID
-						+ ", including create student record, create teacher record and edit student record.");
+						+ ", including transfer record, edit record and create student record.");
 				String[] transferRecord = {"SR10003","LVL"};
 				String[] createStudentRecord = {"Jingye","Hou","maths","active","123"};
 				String[] editRecord = {"SR10003", "FirstName", "Thomas"};
@@ -166,6 +166,7 @@ public class ManagerClient extends Thread{
 			case"7":
 				System.out.println("GoodBye.");
 				return;
+
 
 
 			default:
@@ -187,6 +188,7 @@ public class ManagerClient extends Thread{
 	    String[] array = new String[2];
 	    array[0] = checkInputRecordID(scanner);
         array[1] = checkInputLocation(scanner, "remoteServerName");
+
         return array;
     }
 
@@ -645,7 +647,7 @@ public class ManagerClient extends Thread{
 		FileHandler fileHandler = null;
 
 		try {
-			fileHandler = new FileHandler("./log/client/ClientLogger" + managerID + ".log");
+			fileHandler = new FileHandler("ClientLogger" + managerID + ".log");
 			fileHandler.setFormatter(new MyLogFormatter());
 		} catch (SecurityException | IOException e1) {
 			// TODO Auto-generated catch block

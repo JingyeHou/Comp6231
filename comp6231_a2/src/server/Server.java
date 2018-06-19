@@ -55,7 +55,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		this.name = name;
 		RecordMap = new HashMap<>();
 		logger = Logger.getLogger(name+"ServerLogger");
-		fileHandler = new FileHandler("./log/server/" + name+ ".log");
+		fileHandler = new FileHandler(name+ ".log");
 		fileHandler.setFormatter(new model.MyLogFormatter());
 		logger.addHandler(fileHandler);
 		InitHashMap();
