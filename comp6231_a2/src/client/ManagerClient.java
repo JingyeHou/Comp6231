@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,10 +153,14 @@ public class ManagerClient extends Thread{
 				String[] transferRecord = {"SR10003","LVL"};
 				String[] createStudentRecord = {"Jingye","Hou","maths","active","123"};
 				String[] editRecord = {"SR10003", "FirstName", "Thomas"};
-				new ManagerClient(managerID, args, transferRecord).start();
-				new ManagerClient(managerID, args, createStudentRecord).start();
-				new ManagerClient(managerID, args, editRecord).start();
+				Executors.newSingleThreadExecutor();
+				Thread t1 = new ManagerClient(managerID, args, transferRecord);
+				Thread t2 = new ManagerClient(managerID, args, editRecord);
+				Thread t3 = new ManagerClient(managerID, args, createStudentRecord);
 
+				t1.run();
+				t2.run();
+                t3.run();
 
 				break;
 			case"7":

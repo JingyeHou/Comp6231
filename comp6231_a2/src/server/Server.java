@@ -482,50 +482,54 @@ public class Server extends recordManager.RecordManagerPOA {
 
 	@Override
 	public String transferRecord(String managerID, String recordID, String remoteServerName) {
-	    String receiveData = "";
-		if (!checkRecord(recordID)){
-            logger.info(managerID + " can't transfer the record because the server doesn't have the record");
-            return managerID + " can't transfer the record because the server doesn't have the record";
-        }
-
-		logger.info(managerID + " requests to send transferRecord to " + remoteServerName);
-		if (this.name.equals(remoteServerName)){
-            logger.info("you don't have to transfer the record to " + remoteServerName);
-            return "you don't have to transfer the record to " + remoteServerName;
-        }
-        logger.info("Sending transfer record whose recordID is " + recordID + " to " + remoteServerName);
-        DatagramSocket socket = null;
-        try {
-            socket = new DatagramSocket();
-            String sendInfo = managerID + "," + this.getRecordContent(recordID);
-            byte[] recordInfo = sendInfo.getBytes();
-            logger.info(sendInfo);
-            InetAddress aHost = InetAddress.getByName("localhost");
-            int serverPort = ManagerServerMap.get(remoteServerName);
-            DatagramPacket request = new DatagramPacket(recordInfo, sendInfo.length(), aHost, serverPort);
-            socket.send(request);
-
-            byte[] buffer = new byte[1000];
-            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-            socket.receive(reply);
-            receiveData = new String(buffer, 0, reply.getLength());
-            if (checkIsTransferSuccess(receiveData)) {
-                deleteRecord(recordID);
-            }
-            logger.info(receiveData);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (socket != null) socket.close();
-        }
+		synchronized (this) {
 
 
-        // TODO Auto-generated method stub
-		return receiveData;
+			String receiveData = "";
+			if (!checkRecord(recordID)) {
+				logger.info(managerID + " can't transfer the record because the server doesn't have the record");
+				return managerID + " can't transfer the record because the server doesn't have the record";
+			}
+
+			logger.info(managerID + " requests to send transferRecord to " + remoteServerName);
+			if (this.name.equals(remoteServerName)) {
+				logger.info("you don't have to transfer the record to " + remoteServerName);
+				return "you don't have to transfer the record to " + remoteServerName;
+			}
+			logger.info("Sending transfer record whose recordID is " + recordID + " to " + remoteServerName);
+			DatagramSocket socket = null;
+			try {
+				socket = new DatagramSocket();
+				String sendInfo = managerID + "," + this.getRecordContent(recordID);
+				byte[] recordInfo = sendInfo.getBytes();
+				logger.info(sendInfo);
+				InetAddress aHost = InetAddress.getByName("localhost");
+				int serverPort = ManagerServerMap.get(remoteServerName);
+				DatagramPacket request = new DatagramPacket(recordInfo, sendInfo.length(), aHost, serverPort);
+				socket.send(request);
+
+				byte[] buffer = new byte[1000];
+				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+				socket.receive(reply);
+				receiveData = new String(buffer, 0, reply.getLength());
+				if (checkIsTransferSuccess(receiveData)) {
+					deleteRecord(recordID);
+				}
+				logger.info(receiveData);
+			} catch (SocketException e) {
+				e.printStackTrace();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (socket != null) socket.close();
+			}
+
+
+			// TODO Auto-generated method stub
+			return receiveData;
+		}
 	}
 
     private void deleteRecord(String recordID) {
