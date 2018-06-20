@@ -25,8 +25,6 @@ import model.StudentRecord;
 import model.TeacherRecord;
 import recordManager.RecordManager;
 import recordManager.RecordManagerHelper;
-import recordManager.RecordManagerImpl;
-
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
@@ -329,7 +327,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		return count[0] +","+count[1] +"," +count[2];
 	}
 
-	@Override
+	
 	public int serverGetCount() {
 		// TODO Auto-generated method stub
 		int count = 0;
@@ -340,7 +338,7 @@ public class Server extends recordManager.RecordManagerPOA {
 		    List<Record> val = (List<Record>) entry.getValue();
 		    count = count + val.size();
 		}
-
+		
 		return count;
 	}
 	public List<Record> GetRecordList(){

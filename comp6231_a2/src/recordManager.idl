@@ -9,7 +9,6 @@
 			                 in string courseRegesitered,
                        in string status, in string statusDate);
 	string getCount(in string managerID);
-	long serverGetCount();
 	string editRecord(in string managerID,
                     in string recordID,
                     in string fieldName, in string newValue);
