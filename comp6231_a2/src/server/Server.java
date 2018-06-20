@@ -72,7 +72,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	 * @param record The record need to be inserted.
 	 */
 
-	public void InsertHashMap(Record record){
+	private void InsertHashMap(Record record){
 		// TODO Auto-generated method stub
 		synchronized (RecordMap) {
 		Character key = new Character(record.LastName.charAt(0));
@@ -98,7 +98,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	 * Based on the StuentRecord_ID and +1.
 	 * @return The ID allocated for the new StudentRecord.
 	 */
-	public String GetCurrentStudentRecordID(){
+	private String GetCurrentStudentRecordID(){
 		// TODO Auto-generated method stub
 		int flag = Integer.parseInt(StudentRecord_ID.substring(2, 7));
 		flag++;
@@ -110,7 +110,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	 * Based on the TeacherRecord_ID and +1.
 	 * @return The ID allocated for the new TeacherRecord.
 	 */
-	public String GetCurrentTeacherRecordID(){
+	private String GetCurrentTeacherRecordID(){
 		// TODO Auto-generated method stub
 		int flag = Integer.parseInt(TeacherRecord_ID.substring(2, 7));
 		flag++;
@@ -120,7 +120,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	/**
 	 * Initial the HashMap with some test records at the beginning of program running.
 	 */
-	public void InitHashMap(){
+	private void InitHashMap(){
 		List<Record> recordList = new ArrayList<>();
 		StudentRecord stuRecord1 = new StudentRecord(GetCurrentStudentRecordID(),"Luguang", "Liu", "maths|french", "active", "2017/01/07");
 		StudentRecord stuRecord2 = new StudentRecord(GetCurrentStudentRecordID(),"Zhongxu", "Huang", "maths", "active", "2017/02/07");
@@ -139,7 +139,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	/**
 	 * Iterate the RecordMap and print all the records.
 	 */
-	public String IterateHashMap(){
+	private String IterateHashMap(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("The records on the server are listed below.\n");
 		// TODO Auto-generated method stub
@@ -163,7 +163,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	 * @return If exist, return false
 
 	 */
-	public boolean CheckRecordIfExist2(Record record1){
+	private boolean CheckRecordIfExist2(Record record1){
 		// TODO Auto-generated method stub
 		Iterator iter = RecordMap.entrySet().iterator();
 		if(record1 instanceof StudentRecord){
@@ -328,7 +328,7 @@ public class Server extends recordManager.RecordManagerPOA {
 	}
 
 	
-	public int serverGetCount() {
+	private int serverGetCount() {
 		// TODO Auto-generated method stub
 		int count = 0;
 		Iterator iter = RecordMap.entrySet().iterator();
@@ -409,7 +409,7 @@ public class Server extends recordManager.RecordManagerPOA {
 
 	}
 
-	public boolean FindRecordWithNewValue(Record record, String fieldName, String newValue){
+	private boolean FindRecordWithNewValue(Record record, String fieldName, String newValue){
 		if(record.RecordID.startsWith("SR")){
 			StudentRecord temp = new StudentRecord(record.RecordID, record.getFirstName(), record.getLastName(),
 					((StudentRecord) record).getCourseRegesitered(), ((StudentRecord) record).getStatus(), ((StudentRecord) record).StatusDate);
